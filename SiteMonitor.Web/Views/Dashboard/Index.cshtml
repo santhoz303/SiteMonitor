@@ -1,0 +1,72 @@
+﻿@model IEnumerable<MonitoredSite>
+
+<div class="container">
+    <h2>Your Monitored Sites</h2>
+
+    <div class="row mb-3">
+        <div class="col">
+            <a asp-controller="Monitoring" asp-action="Create" class="btn btn-primary">
+                Add New Site
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        @foreach (var site in Model)
+        {
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">@site.Name</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">
+                            <strong>URL:</strong> <a href="@site.Url" target="_blank">@site.Url</a>
+                        </p>
+                        <p class="card-text">
+                            <strong>Status:</strong>
+                            @{
+                                var lastStatus = site.StatusHistory.FirstOrDefault();
+                                var statusClass = lastStatus?.IsUp == true ? "text-success" : "text-danger";
+                                var statusText = lastStatus?.IsUp == true ? "Up" : "Down";
+                            }
+                            <span class="@statusClass">@statusText</span>
+                        </p>
+
+                        <h6>Recent History</h6>
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Time</th>
+                                    <th>Status</th>
+                                    <th>Code</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var status in site.StatusHistory)
+                                {
+                                    <tr>
+                                        <td>@status.CheckedAt.ToString("g")</td>
+                                        <td>
+                                            <span class="@(status.IsUp ? "text-success" : "text-danger")">
+                                                @(status.IsUp ? "Up" : "Down")
+                                            </span>
+                                        </td>
+                                        <td>@status.StatusCode</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                        <div class="mt-3">
+                            <a asp-controller="Monitoring" asp-action="Edit" asp-route-id="@site.Id"
+                               class="btn btn-sm btn-primary">Edit</a>
+                            <a asp-controller="Monitoring" asp-action="Delete" asp-route-id="@site.Id"
+                               class="btn btn-sm btn-danger">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

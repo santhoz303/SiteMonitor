@@ -1,0 +1,42 @@
+﻿@model SiteMonitor.Web.ViewModels.Admin.AdminDashboardViewModel
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>Admin Dashboard</h2>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-3">
+        <div class="card text-white bg-primary">
+            <div class="card-body">
+                <h5 class="card-title">Total Users</h5>
+                <p class="card-text display-4">@Model.TotalUsers</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+                <h5 class="card-title">Total Sites</h5>
+                <p class="card-text display-4">@Model.TotalSites</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-info">
+            <div class="card-body">
+                <h5 class="card-title">Total Checks</h5>
+                <p class="card-text display-4">@Model.TotalChecks</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-danger">
+            <div class="card-body">
+                <h5 class="card-title">Down Sites</h5>
+                <p class="card-text display-4">@Model.DownSites</p>
+            </div>
+        </div>
+    </div>
+</div>
